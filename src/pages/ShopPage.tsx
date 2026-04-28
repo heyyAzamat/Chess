@@ -14,7 +14,7 @@ const COIN_PACKS = [
   { id: "big",     coins: 5000, label: "ЭЛИТНЫЙ",   price: "599₽",      priceRub: 599,    color: "#C9A84C", popular: false },
 ];
 
-const PREMIUM_PLANS = [
+const PREMIUM_PLANS: { id: string; label: string; days: number; coinCost: number; rubCost: number; perks: string[]; highlight?: boolean }[] = [
   {
     id: "monthly",
     label: "МЕСЯЧНЫЙ",
@@ -32,13 +32,13 @@ const PREMIUM_PLANS = [
     perks: ["Всё из Месячного", "⬡ Бонус 200 монет при активации", "22% выгода vs месячного"],
     highlight: true,
   },
-] as const;
+];
 
 export function ShopPage() {
   const navigate = useNavigate();
-  const { coins, isPremium, premium, addCoins, spendCoins, buyPremium, claimDaily, canAfford } = useCurrency();
+  const { coins, isPremium, premium, addCoins, buyPremium, claimDaily, canAfford } = useCurrency();
   const [toast, setToast] = useState<string | null>(null);
-  const [claimedToday, setClaimedToday] = useState(false);
+  const [, setClaimedToday] = useState(false);
 
   function showToast(msg: string) {
     setToast(msg);

@@ -42,7 +42,6 @@ export function MultiplayerSetup({ p1, onStart, onBack }: Props) {
   }
 
   function playAsGuest() {
-    const name = p2input.trim() || "Гость";
     setFound("guest");
     setError("");
   }

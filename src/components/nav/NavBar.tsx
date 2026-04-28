@@ -1,13 +1,13 @@
 import { NavLink } from "react-router-dom";
 import s from "./NavBar.module.css";
 
-const ITEMS = [
+const ITEMS: { path: string; icon: string; label: string; end?: boolean }[] = [
   { path: "/",           icon: "⌂", label: "ГЛАВНАЯ",    end: true  },
   { path: "/play",       icon: "⚔", label: "ИГРАТЬ"               },
   { path: "/characters", icon: "♛", label: "ГЕРОИ"                },
   { path: "/rating",     icon: "★", label: "РЕЙТИНГ"              },
   { path: "/friends",    icon: "◈", label: "ДРУЗЬЯ"               },
-] as const;
+];
 
 export function NavBar() {
   return (

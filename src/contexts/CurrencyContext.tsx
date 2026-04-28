@@ -165,7 +165,7 @@ export function CurrencyProvider({ children }: { children: ReactNode }) {
       ...d,
       coins: d.coins + bonus,
       lastDailyBonus: today,
-      transactions: [{ id: crypto.randomUUID(), type: "daily_bonus", amount: bonus, description: "Ежедневный бонус", timestamp: new Date().toISOString() }, ...d.transactions].slice(0, 50),
+      transactions: [{ id: crypto.randomUUID(), type: "daily_bonus" as TxType, amount: bonus, description: "Ежедневный бонус", timestamp: new Date().toISOString() }, ...d.transactions].slice(0, 50),
     }));
     return bonus;
   }, []);

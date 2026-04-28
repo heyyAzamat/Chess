@@ -25,13 +25,6 @@ const MODE_LABELS: Record<PageMode, string> = {
   multiplayer: "МУЛЬТИПЛЕЕР",
 };
 
-const MODE_COLORS: Record<PageMode, string> = {
-  bot:         "#FFEE00",
-  story:       "#C9A84C",
-  training:    "#4A90D9",
-  multiplayer: "#FF2D78",
-};
-
 const BOARD_TO_STORY: Partial<Record<BoardEvent, StoryTrigger>> = {
   first_capture_player:    "first_capture_player",
   first_capture_opponent:  "first_capture_opponent",
@@ -248,8 +241,6 @@ export function GamePage() {
       }, 500);
     }
   }
-
-  const modeColor = MODE_COLORS[pageMode];
 
   // Multiplayer setup screen
   if (isMultiplayer && showSetup && user) {

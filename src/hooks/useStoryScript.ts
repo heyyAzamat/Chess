@@ -2,7 +2,7 @@ import { useState, useCallback, useRef } from "react";
 import { STORY_SCRIPT, type StoryMoment, type StoryTrigger } from "../narrative/storyScript";
 
 export function useStoryScript() {
-  const [queue, setQueue]     = useState<StoryMoment[]>([]);
+  const [_queue, setQueue]    = useState<StoryMoment[]>([]);
   const [current, setCurrent] = useState<StoryMoment | null>(null);
   const fired                 = useRef(new Set<string>());
   const timerRef              = useRef<ReturnType<typeof setTimeout> | null>(null);

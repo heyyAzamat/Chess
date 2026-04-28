@@ -92,7 +92,7 @@ function flipTurn(fen: string): string {
 function getAttackedValuable(g: Chess, square: string, myColor: "w" | "b"): string[] {
   try {
     const flipped = new Chess(flipTurn(g.fen()));
-    const attacks = flipped.moves({ square, verbose: true });
+    const attacks = flipped.moves({ square: square as any, verbose: true });
     return attacks
       .filter(m => {
         const target = flipped.get(m.to as any);
@@ -108,7 +108,7 @@ function getAttackedValuable(g: Chess, square: string, myColor: "w" | "b"): stri
 }
 
 // Проверить, висит ли фигура противника (undefended)
-function isUndefended(g: Chess, square: string, enemyColor: "w" | "b"): boolean {
+function isUndefended(g: Chess, square: string, _enemyColor: "w" | "b"): boolean {
   try {
     // Если убрать фигуру, сколько защитников у этого поля?
     // Упрощение: смотрим, атакует ли поле кто-то из enemy

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ComicViewer } from "./ComicViewer";
 import { useComicTrigger } from "./useComicTrigger";
 import { getNarrativeData } from "../../narrative/narrative.service";

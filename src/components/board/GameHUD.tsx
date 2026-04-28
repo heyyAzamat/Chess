@@ -36,10 +36,6 @@ export function GameHUD({
   const advantage = playerCap.reduce((s, c) => s + PIECE_VALUE[c.type], 0)
                   - botCap.reduce((s, c) => s + PIECE_VALUE[c.type], 0);
 
-  const botColor: ChessColor    = playerColor === "white" ? "black" : "white";
-  const auroraColor: ChessColor = "white";
-  const novaColor: ChessColor   = "black";
-
   const leftFaction  = isMultiplayer ? "АВРОРА" : (playerColor === "white" ? "АВРОРА" : "НОВА");
   const rightFaction = isMultiplayer ? "НОВА"   : (playerColor === "white" ? "НОВА"   : "АВРОРА");
   const leftColor    = isMultiplayer ? "#4A90D9"  : (playerColor === "white" ? "#4A90D9"  : "#FF2D78");

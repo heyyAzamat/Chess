@@ -83,7 +83,6 @@ export function Board({
 
   // In multiplayer both colors are "player"
   const playerColorCh = playerColor === "white" ? "w" : "b";
-  const botColorCh    = playerColor === "white" ? "b" : "w";
   const depth = BOT_DEPTH[difficulty] ?? 3;
 
   function resolveStatus(g: Chess): GameStatus {
@@ -328,7 +327,7 @@ export function Board({
         // Re-read moves from the same FEN (game state may have changed)
         const g = new Chess(fen);
         setSelected(hint.from as Square);
-        setValidMoves(new Set(g.moves({ square: hint.from, verbose: true }).map((m: any) => m.to as Square)));
+        setValidMoves(new Set(g.moves({ square: hint.from as Square, verbose: true }).map((m: any) => m.to as Square)));
         setHintSquare(hint.to as Square);
         setHintResult(hint);
       }

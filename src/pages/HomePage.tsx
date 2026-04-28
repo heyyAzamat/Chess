@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import s from "./HomePage.module.css";
 
-const MENU_ITEMS = [
+const MENU_ITEMS: { id: string; label: string; sub: string; icon: string; path: string; color: string; glow: string; big?: boolean }[] = [
   {
     id: "play",
     label: "ИГРАТЬ",
@@ -49,7 +49,7 @@ const MENU_ITEMS = [
     color: "#888",
     glow: "#88888822",
   },
-] as const;
+];
 
 const FACTION_COLOR = { aurora: "#4A90D9", nova: "#FF2D78" } as const;
 const FACTION_LABEL = { aurora: "АВРОРА", nova: "НОВА" } as const;

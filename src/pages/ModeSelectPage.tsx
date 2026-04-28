@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCurrency, COIN, BET_MULTIPLIERS, MAX_BET_FREE, MAX_BET_PREMIUM } from "../contexts/CurrencyContext";
+import { useCurrency, COIN, BET_MULTIPLIERS, MAX_BET_FREE } from "../contexts/CurrencyContext";
 import { CoinDisplay } from "../components/CoinDisplay/CoinDisplay";
 import s from "./ModeSelectPage.module.css";
 

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { type Square } from "chess.js";
 import { useAuth } from "../contexts/AuthContext";
@@ -117,7 +117,7 @@ export function OnlinePage() {
 
   // ── Render board orientation (flip for black) ─────────────────────────────
   const ranks = myColor === "white" ? RANKS : [...RANKS].reverse();
-  const files = myColor === "white" ? FILES : [...FILES].reverse() as typeof FILES;
+  const files = myColor === "white" ? FILES : [...FILES].reverse() as unknown as typeof FILES;
 
   // ── LOBBY phase ───────────────────────────────────────────────────────────
   if (phase === "lobby") {

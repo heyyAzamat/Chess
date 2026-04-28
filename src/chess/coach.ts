@@ -335,7 +335,7 @@ function analyzeMove(record: CoachMoveRecord, depth: number): CoachAnalysis | nu
 
 // ── Top tip generator ─────────────────────────────────────────────────────────
 
-function generateTopTip(analyses: CoachAnalysis[], totalMoves: number): string {
+function generateTopTip(analyses: CoachAnalysis[]): string {
   if (analyses.length === 0) return "Отличная партия — серьёзных ошибок не найдено. Продолжай в том же духе!";
 
   const byPhase = analyses.reduce<Record<string, number>>((acc, a) => {
@@ -396,7 +396,8 @@ export function analyzeGame(
     const result = analyzeMove(rec, depth);
     if (result) {
       analyses.push(result);
-      phaseStats[result.phase][result.type]++;
+      const key = (result.type + "s") as keyof PhaseStats;
+      phaseStats[result.phase][key]++;
     }
   });
 
@@ -418,6 +419,6 @@ export function analyzeGame(
     inaccuracies,
     accuracy,
     phaseStats,
-    topTip: generateTopTip(top, playerMoves.length),
+    topTip: generateTopTip(top),
   };
 }
