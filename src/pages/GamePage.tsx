@@ -50,7 +50,7 @@ const MOVE_TRIGGERS: Record<number, StoryTrigger> = {
 export function GamePage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { updateStats } = useAuth();
+  const { user, updateStats } = useAuth();
   const { addCoins, spendCoins, isPremium } = useCurrency();
 
   const rawMode = searchParams.get("mode") ?? "bot";

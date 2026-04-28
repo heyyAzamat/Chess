@@ -1,6 +1,7 @@
 import type { ComicPanel as ComicPanelData, NarrativeData } from "../../narrative/narrative.types";
 import { DialogueBubble } from "./DialogueBubble";
 import { SpeedLines } from "./SpeedLines";
+import { PanelArtwork } from "./PanelArtwork";
 import styles from "./ComicViewer.module.css";
 
 interface Props {
@@ -56,7 +57,9 @@ export function ComicPanel({ panel, narrative, sceneId }: Props) {
     >
       {/* Visual area */}
       <div className={styles.panelVisual}>
-        {isAction && <SpeedLines color={dominantGlow} opacity={0.5} />}
+        <PanelArtwork sceneId={sceneId} panelIndex={panel.index} />
+
+        {isAction && <SpeedLines color={dominantGlow} opacity={0.4} />}
 
         <div className={styles.halftone} />
 

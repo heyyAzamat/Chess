@@ -13,30 +13,45 @@ export interface CoachMoveRecord {
 }
 
 export type MistakeType = "blunder" | "mistake" | "inaccuracy";
+export type GamePhase    = "opening" | "middlegame" | "endgame";
+export type TacticType   = "fork" | "hanging" | "capture" | "check" | "promotion" | "castling" | "positional";
 
 export interface CoachAnalysis {
-  moveNum: number;
-  color: "w" | "b";
-  playedSan: string;
-  bestSan: string;
-  bestFrom: string;
-  bestTo: string;
-  evalDrop: number;       // centipawns — сколько потеряли
-  type: MistakeType;
-  headline: string;
-  tip: string;            // конкретный совет
-  fenBefore: string;
+  moveNum:     number;
+  color:       "w" | "b";
+  playedSan:   string;
+  playedFrom:  string;
+  playedTo:    string;
+  bestSan:     string;
+  bestFrom:    string;
+  bestTo:      string;
+  evalDrop:    number;
+  type:        MistakeType;
+  headline:    string;
+  tip:         string;
+  fenBefore:   string;
+  phase:       GamePhase;
+  tactic:      TacticType;
+}
+
+export interface PhaseStats {
+  blunders:     number;
+  mistakes:     number;
+  inaccuracies: number;
+  moves:        number;
 }
 
 export interface CoachReport {
-  analyses: CoachAnalysis[];       // sorted worst → best
-  blunders: number;
-  mistakes: number;
+  analyses:     CoachAnalysis[];
+  blunders:     number;
+  mistakes:     number;
   inaccuracies: number;
-  accuracy: number;                // 0-100%
+  accuracy:     number;
+  phaseStats:   Record<GamePhase, PhaseStats>;
+  topTip:       string;
 }
 
-// ── Minimax (self-contained copy) ─────────────────────────────────────────────
+// ── Evaluation & minimax ──────────────────────────────────────────────────────
 
 const MAT: Record<string, number> = { p:100, n:320, b:330, r:500, q:900, k:20000 };
 
@@ -65,10 +80,12 @@ function evaluate(g: Chess): number {
   return score;
 }
 
-function orderMoves(moves: ReturnType<Chess["moves"]>) {
+function orderMoves(moves: any[]) {
   return [...moves].sort((a: any, b: any) =>
-    (MAT[(b as any).captured ?? ""] ?? 0) - (MAT[(a as any).captured ?? ""] ?? 0)
-  ) as any[];
+    (b.san?.startsWith("+") || b.san?.startsWith("#") ? 1 : 0) -
+    (a.san?.startsWith("+") || a.san?.startsWith("#") ? 1 : 0) ||
+    (MAT[b.captured ?? ""] ?? 0) - (MAT[a.captured ?? ""] ?? 0)
+  );
 }
 
 function minimax(g: Chess, depth: number, alpha: number, beta: number, max: boolean): number {
@@ -93,7 +110,7 @@ function minimax(g: Chess, depth: number, alpha: number, beta: number, max: bool
   }
 }
 
-function getBestMove(fen: string, depth: number) {
+function getBestMove(fen: string, depth: number): any | null {
   const g = new Chess(fen);
   const isWhite = g.turn() === "w";
   const moves = orderMoves(g.moves({ verbose: true }) as any[]);
@@ -112,39 +129,153 @@ function getBestMove(fen: string, depth: number) {
   return bestMove;
 }
 
-// ── Tip generator ─────────────────────────────────────────────────────────────
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
+function getPhase(moveNum: number): GamePhase {
+  if (moveNum <= 10) return "opening";
+  if (moveNum <= 30) return "middlegame";
+  return "endgame";
+}
+
+const FILES = "abcdefgh";
 const PIECE_RU: Record<string, string> = {
-  k:"Королём", q:"Ферзём", r:"Ладьёй", b:"Слоном", n:"Конём", p:"Пешкой"
+  k:"короля", q:"ферзя", r:"ладью", b:"слона", n:"коня", p:"пешку",
+};
+const PIECE_NAMES: Record<string, string> = {
+  k:"Король", q:"Ферзь", r:"Ладья", b:"Слон", n:"Конь", p:"Пешка",
 };
 
-function generateTip(fenBefore: string, playedFrom: string, playedTo: string, bestMove: any): string {
-  const g = new Chess(fenBefore);
+// Finds opponent pieces that are undefended (hanging) from the perspective of `attackerColor`
+function findHanging(g: Chess, attackerColor: "w" | "b"): { sq: string; type: string; val: number }[] {
+  const defenderColor = attackerColor === "w" ? "b" : "w";
+  const board = g.board();
+  const results: { sq: string; type: string; val: number }[] = [];
 
-  // What did the best move accomplish?
+  for (let r = 0; r < 8; r++) {
+    for (let c = 0; c < 8; c++) {
+      const p = board[r][c];
+      if (!p || p.color !== defenderColor || p.type === "k") continue;
+      const sq = FILES[c] + (8 - r) as any;
+      if (!g.isAttacked(sq, attackerColor)) continue;  // we can't take it
+      if (g.isAttacked(sq, defenderColor)) continue;   // it IS defended
+      results.push({ sq, type: p.type, val: MAT[p.type] ?? 0 });
+    }
+  }
+  return results.sort((a, b) => b.val - a.val);
+}
+
+// Detect if a move creates a fork (attacks 2+ valuable pieces)
+function detectFork(fen: string, move: any): boolean {
+  const g = new Chess(fen);
+  g.move(move);
+  const movedPiece = g.get(move.to);
+  if (!movedPiece) return false;
+  const oppColor = movedPiece.color === "w" ? "b" : "w";
+  const board = g.board();
+  let attacked = 0;
+  for (let r = 0; r < 8; r++) {
+    for (let c = 0; c < 8; c++) {
+      const p = board[r][c];
+      if (!p || p.color !== oppColor) continue;
+      if ((MAT[p.type] ?? 0) < 300) continue;
+      const sq = FILES[c] + (8 - r) as any;
+      if (g.isAttacked(sq, movedPiece.color)) attacked++;
+    }
+  }
+  return attacked >= 2;
+}
+
+// ── Tip generator ─────────────────────────────────────────────────────────────
+
+function generateTip(
+  fenBefore: string,
+  playedFrom: string,
+  playedTo: string,
+  bestMove: any,
+  moveNum: number,
+  evalDrop: number,
+): { tip: string; tactic: TacticType } {
+  const phase = getPhase(moveNum);
   const gBest = new Chess(fenBefore);
   gBest.move(bestMove);
-  if (gBest.isCheckmate()) return "Лучший ход ставил мат прямо здесь!";
-  if (gBest.isCheck())     return `${bestMove.san} давал шах и выигрывал темп.`;
 
+  // 1. Checkmate available
+  if (gBest.isCheckmate()) {
+    return { tip: `Это был мат! ${bestMove.san} заканчивал партию прямо здесь.`, tactic: "check" };
+  }
+
+  // 2. Best move gives check
+  if (gBest.isCheck() && !bestMove.captured) {
+    return { tip: `${bestMove.san} ставил шах — противник терял темп на защиту короля.`, tactic: "check" };
+  }
+
+  // 3. Fork detection
+  if (detectFork(fenBefore, bestMove)) {
+    const pieceName = PIECE_NAMES[bestMove.piece] ?? "Фигура";
+    return { tip: `${pieceName} на ${bestMove.to} создавал вилку — одновременно атаковал несколько ценных фигур.`, tactic: "fork" };
+  }
+
+  // 4. Hanging piece missed
+  const gBefore = new Chess(fenBefore);
+  const hanging = findHanging(gBefore, gBefore.turn());
+  if (hanging.length > 0 && bestMove.captured) {
+    const h = hanging[0];
+    if (h.type === bestMove.captured || h.sq === bestMove.to) {
+      return { tip: `${PIECE_NAMES[h.type] ?? "Фигура"} противника на ${h.sq} стояла без защиты. ${bestMove.san} забирала её бесплатно.`, tactic: "hanging" };
+    }
+  }
+
+  // 5. Material capture
   if (bestMove.captured) {
     const val = MAT[bestMove.captured] ?? 0;
-    if (val >= 500) return `${bestMove.san} брало ладью — крупный выигрыш материала.`;
-    if (val >= 300) return `${bestMove.san} брало фигуру — выгодный размен.`;
-    return `${bestMove.san} выигрывало пешку без потерь.`;
+    const pieceName = PIECE_RU[bestMove.captured] ?? "фигуру";
+    if (val >= 900) return { tip: `${bestMove.san} выигрывало ферзя! Решающее материальное преимущество.`, tactic: "capture" };
+    if (val >= 500) return { tip: `${bestMove.san} брало ладью — крупный выигрыш, особенно если без компенсации.`, tactic: "capture" };
+    if (val >= 300) return { tip: `${bestMove.san} забирало ${pieceName} без потерь — конкретная выгода.`, tactic: "capture" };
+    return { tip: `${bestMove.san} выигрывало пешку. Небольшой, но реальный материальный плюс.`, tactic: "capture" };
   }
 
-  // What was bad about the played move?
+  // 6. Promotion
+  if (bestMove.flags?.includes("p")) {
+    return { tip: `Пешка могла превратиться ходом ${bestMove.san} — это меняло баланс сил.`, tactic: "promotion" };
+  }
+
+  // 7. Castling missed
+  if (bestMove.flags?.includes("k") || bestMove.flags?.includes("q")) {
+    return { tip: `Рокировка ${bestMove.san} укрывала короля и соединяла ладьи — важный элемент в ${phase === "opening" ? "дебюте" : "миттельшпиле"}.`, tactic: "castling" };
+  }
+
+  // 8. Opening principles
+  if (phase === "opening") {
+    const g = new Chess(fenBefore);
+    const piece = g.get(bestMove.from as any);
+    if (piece && ["n", "b"].includes(piece.type)) {
+      return { tip: `В дебюте важно развивать фигуры. ${bestMove.san} выводило ${PIECE_NAMES[piece.type]?.toLowerCase()} на активное поле.`, tactic: "positional" };
+    }
+    const center = ["d4","d5","e4","e5"];
+    if (center.includes(bestMove.to)) {
+      return { tip: `${bestMove.san} контролировало центр — главный принцип дебюта. Без центра сложно атаковать.`, tactic: "positional" };
+    }
+  }
+
+  // 9. What bad consequence did the played move allow?
   const gPlayed = new Chess(fenBefore);
   gPlayed.move({ from: playedFrom, to: playedTo, promotion: "q" });
-  const opponentBest = getBestMove(gPlayed.fen(), 2);
-  if (opponentBest?.captured) {
-    return `После твоего хода противник мог взять ${PIECE_RU[opponentBest.captured] ?? "фигуру"} ходом ${opponentBest.san}.`;
+  const oppBest = getBestMove(gPlayed.fen(), 2);
+  if (oppBest?.captured) {
+    const val = MAT[oppBest.captured] ?? 0;
+    if (val >= 300) return { tip: `Твой ход оставлял ${PIECE_RU[oppBest.captured] ?? "фигуру"} без защиты — противник мог взять её ходом ${oppBest.san}.`, tactic: "positional" };
+  }
+  if (oppBest && detectFork(gPlayed.fen(), oppBest)) {
+    return { tip: `Твой ход открывал противнику вилку ходом ${oppBest.san}.`, tactic: "positional" };
   }
 
-  if (bestMove.piece === "n") return `Конь на ${bestMove.to} создавал угрозы — центральная позиция.`;
-  if (bestMove.flags?.includes("k") || bestMove.flags?.includes("q")) return "Рокировка укрывала короля и активировала ладью.";
-  return `Ход ${bestMove.san} давал лучшую позицию по оценке компьютера.`;
+  // 10. Piece-specific positional hints
+  if (bestMove.piece === "n") return { tip: `Конь на ${bestMove.to} занимал сильное поле — поддержку центра и давление на соперника (+${(evalDrop/100).toFixed(1)}♙).`, tactic: "positional" };
+  if (bestMove.piece === "r") return { tip: `Ладья на ${bestMove.to} переходила на открытую вертикаль или 7-й ряд — мощная активная позиция.`, tactic: "positional" };
+  if (bestMove.piece === "b") return { tip: `Слон на ${bestMove.to} контролировал длинную диагональ (+${(evalDrop/100).toFixed(1)}♙).`, tactic: "positional" };
+
+  return { tip: `Ход ${bestMove.san} давал преимущество в ${(evalDrop/100).toFixed(1)} пешки по оценке движка.`, tactic: "positional" };
 }
 
 // ── Single move analysis ──────────────────────────────────────────────────────
@@ -153,53 +284,95 @@ function analyzeMove(record: CoachMoveRecord, depth: number): CoachAnalysis | nu
   const g = new Chess(record.fenBefore);
   const isWhite = record.color === "w";
 
-  // Evaluate position after played move
+  // Eval after played move
   const played = g.move({ from: record.from, to: record.to, promotion: record.promotion ?? "q" });
   if (!played) return null;
   const evalAfterPlayed = evaluate(g);
   g.undo();
 
-  // Find best move & evaluate after it
+  // Best move
   const bestMove = getBestMove(record.fenBefore, depth);
   if (!bestMove) return null;
-
-  // Skip if played move IS the best move (same from/to)
   if (bestMove.from === record.from && bestMove.to === record.to) return null;
 
   g.move(bestMove);
   const evalAfterBest = evaluate(g);
   g.undo();
 
-  // Eval drop from player's perspective
   const evalDrop = isWhite
     ? evalAfterBest - evalAfterPlayed
     : evalAfterPlayed - evalAfterBest;
 
-  if (evalDrop < 40) return null; // not significant enough
+  if (evalDrop < 40) return null;
 
   const type: MistakeType = evalDrop >= 250 ? "blunder" : evalDrop >= 100 ? "mistake" : "inaccuracy";
   const headlines: Record<MistakeType, string> = {
-    blunder:     "Грубая ошибка",
-    mistake:     "Ошибка",
-    inaccuracy:  "Неточность",
+    blunder:    "Грубая ошибка",
+    mistake:    "Ошибка",
+    inaccuracy: "Неточность",
   };
+
+  const { tip, tactic } = generateTip(record.fenBefore, record.from, record.to, bestMove, record.moveNum, evalDrop);
 
   return {
     moveNum:    record.moveNum,
     color:      record.color,
     playedSan:  record.san,
+    playedFrom: record.from,
+    playedTo:   record.to,
     bestSan:    bestMove.san,
     bestFrom:   bestMove.from,
     bestTo:     bestMove.to,
     evalDrop,
     type,
     headline:   headlines[type],
-    tip:        generateTip(record.fenBefore, record.from, record.to, bestMove),
+    tip,
     fenBefore:  record.fenBefore,
+    phase:      getPhase(record.moveNum),
+    tactic,
   };
 }
 
+// ── Top tip generator ─────────────────────────────────────────────────────────
+
+function generateTopTip(analyses: CoachAnalysis[], totalMoves: number): string {
+  if (analyses.length === 0) return "Отличная партия — серьёзных ошибок не найдено. Продолжай в том же духе!";
+
+  const byPhase = analyses.reduce<Record<string, number>>((acc, a) => {
+    acc[a.phase] = (acc[a.phase] ?? 0) + 1;
+    return acc;
+  }, {});
+
+  const byTactic = analyses.reduce<Record<string, number>>((acc, a) => {
+    acc[a.tactic] = (acc[a.tactic] ?? 0) + 1;
+    return acc;
+  }, {});
+
+  const worstPhase = (Object.entries(byPhase).sort((a, b) => b[1] - a[1])[0]?.[0] as GamePhase) ?? "middlegame";
+  const topTactic = Object.entries(byTactic).sort((a, b) => b[1] - a[1])[0]?.[0] as TacticType ?? "positional";
+
+  const phaseAdvice: Record<GamePhase, string> = {
+    opening:    "В дебюте старайся развивать фигуры, контролировать центр и делать рокировку до 10-го хода.",
+    middlegame: "В миттельшпиле перед каждым ходом спрашивай: «Что угрожает противник? Могу ли я взять что-нибудь?»",
+    endgame:    "В эндшпиле активизируй короля и создавай проходные пешки — они решают партию.",
+  };
+
+  const tacticAdvice: Record<TacticType, string> = {
+    hanging:    "Чаще ищи незащищённые фигуры соперника — это самый прямой способ выиграть материал.",
+    fork:       "Практикуй тактику вилок — один ход атакует сразу несколько целей, и противник не успевает защититься.",
+    capture:    "Перед ходом сканируй доску на взятия: есть ли что-то, что можно взять без потерь?",
+    check:      "Ищи шахи — они выигрывают темп и могут привести к мату или выигрышу материала.",
+    promotion:  "В эндшпиле считай, как провести пешку в ферзи — это часто решает партию.",
+    castling:   "Делай рокировку пораньше, чтобы защитить короля и соединить ладьи.",
+    positional: "Работай над стратегическим мышлением: активизируй фигуры, улучшай их позиции.",
+  };
+
+  return phaseAdvice[worstPhase] + " " + tacticAdvice[topTactic];
+}
+
 // ── Main export ───────────────────────────────────────────────────────────────
+
+const emptyPhase = (): PhaseStats => ({ blunders: 0, mistakes: 0, inaccuracies: 0, moves: 0 });
 
 export function analyzeGame(
   records: CoachMoveRecord[],
@@ -209,25 +382,42 @@ export function analyzeGame(
 ): CoachReport {
   const playerMoves = records.filter(r => r.color === playerColor);
   const analyses: CoachAnalysis[] = [];
+  const phaseStats: Record<GamePhase, PhaseStats> = {
+    opening: emptyPhase(), middlegame: emptyPhase(), endgame: emptyPhase(),
+  };
 
   playerMoves.forEach((rec, i) => {
     onProgress(i, playerMoves.length);
+
+    const phase = getPhase(rec.moveNum);
+    phaseStats[phase].moves++;
+
+    // Use depth=2 for speed, depth=3 only for already-suspicious positions
     const result = analyzeMove(rec, depth);
-    if (result) analyses.push(result);
+    if (result) {
+      analyses.push(result);
+      phaseStats[result.phase][result.type]++;
+    }
   });
 
   onProgress(playerMoves.length, playerMoves.length);
-
   analyses.sort((a, b) => b.evalDrop - a.evalDrop);
-  const top = analyses.slice(0, 5);
+  const top = analyses.slice(0, 8);
 
   const blunders     = analyses.filter(a => a.type === "blunder").length;
   const mistakes     = analyses.filter(a => a.type === "mistake").length;
   const inaccuracies = analyses.filter(a => a.type === "inaccuracy").length;
 
-  // Accuracy: 100 if no mistakes, drops with each error weighted by severity
   const totalPenalty = blunders * 3 + mistakes * 2 + inaccuracies;
-  const accuracy = Math.max(0, Math.round(100 - (totalPenalty / Math.max(playerMoves.length, 1)) * 25));
+  const accuracy = Math.max(0, Math.round(100 - (totalPenalty / Math.max(playerMoves.length, 1)) * 22));
 
-  return { analyses: top, blunders, mistakes, inaccuracies, accuracy };
+  return {
+    analyses: top,
+    blunders,
+    mistakes,
+    inaccuracies,
+    accuracy,
+    phaseStats,
+    topTip: generateTopTip(top, playerMoves.length),
+  };
 }

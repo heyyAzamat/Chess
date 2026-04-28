@@ -35,6 +35,7 @@ function AppRoutes() {
         <Route path="/friends"    element={<RequireAuth><FriendsPage /></RequireAuth>} />
         <Route path="/settings"   element={<RequireAuth><SettingsPage /></RequireAuth>} />
         <Route path="/online"     element={<RequireAuth><OnlinePage /></RequireAuth>} />
+        <Route path="/shop"       element={<RequireAuth><ShopPage /></RequireAuth>} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
@@ -48,7 +49,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <AppRoutes />
+        <CurrencyProvider>
+          <AppRoutes />
+        </CurrencyProvider>
       </AuthProvider>
     </BrowserRouter>
   );
