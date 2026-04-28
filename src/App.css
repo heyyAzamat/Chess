@@ -1,0 +1,23 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px; /* base — все rem-значения относительно этого */
+}
+
+html, body, #root {
+  height: 100%;
+  background: #0A0A0F;
+  color: #f0f0f0;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+/* ── Global font-size overrides — поднимаем минимум читаемости ── */
+:root {
+  --text-xs:  11px;
+  --text-sm:  13px;
+  --text-md:  15px;
+  --text-lg:  17px;
+}
+
+/* Add bottom padding globally so NavBar doesn't overlap content */
+body { padding-bottom: env(safe-area-inset-bottom, 0); }

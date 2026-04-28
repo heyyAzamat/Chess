@@ -1,0 +1,271 @@
+.page {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 0 40px;
+  position: relative;
+}
+
+.bg {
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, #ffffff04 1px, transparent 1px);
+  background-size: 8px 8px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Header / user card ──────────────────────────────────────────────────── */
+.header {
+  width: 100%;
+  background: #000;
+  border-bottom: 2px solid #111;
+  padding: 12px 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.userCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bangers', cursive;
+  font-size: 18px;
+  color: #000;
+  flex-shrink: 0;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.username {
+  font-family: 'Bangers', cursive;
+  font-size: 18px;
+  letter-spacing: 0.06em;
+  color: #f0f0f0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.factionBadge {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 6px currentColor;
+}
+
+.userStats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.statNum {
+  font-family: 'Bangers', cursive;
+  font-size: 20px;
+  color: #fff;
+  line-height: 1;
+}
+
+.statLabel {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: #444;
+  letter-spacing: 0.1em;
+}
+
+.statSep {
+  width: 1px;
+  height: 24px;
+  background: #222;
+}
+
+.logoutBtn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #111;
+  border: 1px solid #333;
+  color: #555;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.logoutBtn:hover { color: #FF2D78; border-color: #FF2D78; }
+
+/* ── Title ───────────────────────────────────────────────────────────────── */
+.titleBlock {
+  text-align: center;
+  padding: 28px 16px 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.titleSub {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  color: #444;
+  letter-spacing: 0.2em;
+  margin-bottom: 6px;
+}
+
+.title {
+  font-family: 'Bangers', cursive;
+  font-size: clamp(24px, 5vw, 36px);
+  letter-spacing: 0.1em;
+  color: #fff;
+  text-shadow: 2px 2px 0 #000;
+}
+
+/* ── Menu ────────────────────────────────────────────────────────────────── */
+.menu {
+  width: 100%;
+  max-width: 680px;
+  padding: 20px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: #0f0f1a;
+  border: 2px solid #1a1a2e;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.menuItem::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--item-color, #444);
+  box-shadow: 0 0 8px var(--item-color, #444);
+}
+
+.menuItem:hover {
+  border-color: var(--item-color, #444);
+  background: #12121f;
+  box-shadow: 0 0 20px var(--item-glow, #44444422);
+  transform: translateX(2px);
+}
+
+.menuItemBig {
+  padding: 22px 24px;
+  border-color: var(--item-color, #FFEE00);
+  box-shadow: 0 0 20px var(--item-glow, #FFEE0022);
+}
+
+.menuItemBig:hover {
+  box-shadow: 0 0 40px var(--item-glow, #FFEE0044);
+  transform: translateX(3px);
+}
+
+.menuGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.menuIcon {
+  font-size: 28px;
+  color: var(--item-color, #fff);
+  filter: drop-shadow(0 0 6px var(--item-color, #fff));
+  flex-shrink: 0;
+  width: 36px;
+  text-align: center;
+}
+
+.menuText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.menuLabel {
+  font-family: 'Bangers', cursive;
+  font-size: 22px;
+  letter-spacing: 0.08em;
+  color: var(--item-color, #fff);
+  text-shadow: 0 0 8px var(--item-color, #fff);
+  line-height: 1;
+}
+
+.menuItemBig .menuLabel { font-size: 28px; }
+
+.menuSub {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  color: #555;
+  letter-spacing: 0.08em;
+}
+
+.menuArrow {
+  font-family: 'Bangers', cursive;
+  font-size: 24px;
+  color: var(--item-color, #fff);
+  opacity: 0.5;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.menuItem:hover .menuArrow {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+.footer {
+  margin-top: 32px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  color: #222;
+  letter-spacing: 0.2em;
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 480px) {
+  .menuGrid { grid-template-columns: 1fr; }
+  .userStats { gap: 8px; }
+  .statLabel { display: none; }
+}

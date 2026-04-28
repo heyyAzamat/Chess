@@ -1,0 +1,337 @@
+.page {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: #0A0A0F;
+  position: relative;
+}
+
+.bg {
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, #ffffff04 1px, transparent 1px);
+  background-size: 8px 8px;
+  pointer-events: none;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: #000;
+  border-bottom: 2px solid #111;
+  flex-shrink: 0;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.backBtn {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  padding: 7px 14px;
+  background: #111;
+  border: 1px solid #333;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.backBtn:hover { color: #fff; border-color: #666; }
+
+.title {
+  font-family: 'Bangers', cursive;
+  font-size: 26px;
+  letter-spacing: 0.12em;
+  color: #FFEE00;
+  text-shadow: 0 0 14px #FFEE0055;
+  flex: 1;
+  text-align: center;
+}
+
+/* ── Layout ──────────────────────────────────────────────────────────────── */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 16px 100px;
+  max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Top row: ИГРА + СЮЖЕТ side by side */
+.topRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* Bottom row: ОБУЧЕНИЕ + МУЛЬТИПЛЕЕР side by side */
+.bottomRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* ── Mode cards ──────────────────────────────────────────────────────────── */
+.modeCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px 16px;
+  background: #0f0f1a;
+  border: 2px solid var(--mc, #444);
+  box-shadow: 0 0 20px var(--mg, #44444418), inset 0 0 40px #00000040;
+  position: relative;
+  overflow: hidden;
+}
+
+.modeCardSmall {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 14px;
+  background: #0f0f1a;
+  border: 2px solid var(--mc, #444);
+  box-shadow: 0 0 16px var(--mg, #44444418), inset 0 0 30px #00000040;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Left glow strip */
+.modeCard::before,
+.modeCardSmall::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--mc, #444);
+  box-shadow: 0 0 10px var(--mc, #444);
+}
+
+/* ── Header inside card ──────────────────────────────────────────────────── */
+.modeHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modeIcon {
+  font-size: 32px;
+  color: var(--mc, #fff);
+  filter: drop-shadow(0 0 8px var(--mc, #fff));
+  flex-shrink: 0;
+  width: 40px;
+  text-align: center;
+}
+
+.modeIconSm {
+  font-size: 24px;
+  color: var(--mc, #fff);
+  filter: drop-shadow(0 0 6px var(--mc, #fff));
+  flex-shrink: 0;
+  width: 30px;
+  text-align: center;
+}
+
+.modeName {
+  font-family: 'Bangers', cursive;
+  font-size: 26px;
+  letter-spacing: 0.1em;
+  color: var(--mc, #fff);
+  text-shadow: 0 0 10px var(--mc, #fff);
+  line-height: 1;
+  margin: 0;
+}
+
+.modeNameSm {
+  font-family: 'Bangers', cursive;
+  font-size: 22px;
+  letter-spacing: 0.1em;
+  color: var(--mc, #fff);
+  text-shadow: 0 0 8px var(--mc, #fff);
+  line-height: 1;
+  margin: 0;
+}
+
+.modeTagline {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: #555;
+  letter-spacing: 0.1em;
+  margin: 2px 0 0;
+}
+
+.modeDesc {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  color: #777;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+/* ── Difficulty row ──────────────────────────────────────────────────────── */
+.diffRow {
+  display: flex;
+  gap: 6px;
+}
+
+.diffBtn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 6px;
+  background: #0a0a14;
+  border: 2px solid #1a1a2e;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.diffBtn:hover { border-color: var(--dc, #444); }
+.diffBtnActive {
+  border-color: var(--dc, #444);
+  background: #12121f;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--dc, #444) 25%, transparent);
+}
+
+.diffLabel {
+  font-family: 'Bangers', cursive;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  color: var(--dc, #fff);
+}
+
+.diffSub {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: #555;
+}
+
+/* ── Features ────────────────────────────────────────────────────────────── */
+.featureList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.feature {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--mc, #888);
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+
+/* ── Multi options ───────────────────────────────────────────────────────── */
+.multiOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ── Start button ────────────────────────────────────────────────────────── */
+.startBtn {
+  font-family: 'Bangers', cursive;
+  font-size: 17px;
+  letter-spacing: 0.1em;
+  padding: 10px 16px;
+  background: #0a0a14;
+  border: 2px solid var(--sc, #FFEE00);
+  color: var(--sc, #FFEE00);
+  cursor: pointer;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: all 0.15s;
+  width: 100%;
+  text-align: center;
+  margin-top: auto;
+}
+
+.startBtn:hover {
+  background: var(--sc, #FFEE00);
+  color: #000;
+  box-shadow: 0 0 18px var(--sc, #FFEE00);
+}
+
+/* ── Stake row ───────────────────────────────────────────────────────────── */
+.stakeRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: #0a0a14;
+  border: 1px solid #1a1a2e;
+}
+
+.stakeLabel {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: #C9A84C;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.stakeInput {
+  flex: 1;
+  min-width: 0;
+  background: #0a0a14;
+  border: 1px solid #2a2a3e;
+  color: #f0f0f0;
+  font-family: 'Bangers', cursive;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  padding: 4px 8px;
+  outline: none;
+  text-align: center;
+}
+.stakeInput:focus { border-color: #C9A84C; }
+
+.stakeMulti {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: #4caf50;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.stakeNote {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: #FF6B1A;
+  margin: -4px 0 0;
+}
+
+/* ── Online row ──────────────────────────────────────────────────────────── */
+.onlineRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.onlineRow .startBtn {
+  flex: 1;
+}
+
+.onlineNote {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: #FF6B1A;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  opacity: 0.85;
+  flex-shrink: 0;
+}
+
+/* ── Mobile ──────────────────────────────────────────────────────────────── */
+@media (max-width: 560px) {
+  .topRow    { grid-template-columns: 1fr; }
+  .bottomRow { grid-template-columns: 1fr; }
+  .diffRow   { flex-direction: row; }
+}

@@ -1,0 +1,576 @@
+{
+  "id": "eden-zero",
+  "title": "ЭДЕМ-ЗЕРО: Протокол Войны",
+  "subtitle": "Последняя война за душу города",
+  "year": 2187,
+
+  "factions": {
+    "white": {
+      "id": "aurora",
+      "name": "АВРОРА",
+      "tagline": "Белый Протокол",
+      "motto": "Порядок — единственная форма свободы",
+      "description": "Корпоративная теократия верхних уровней. Контролируют Оракула и верят, что только они достойны этого права.",
+      "theme": {
+        "primary": "#F0F4FF",
+        "secondary": "#4A90D9",
+        "accent": "#C9A84C",
+        "glow": "#89C4FF"
+      },
+      "aesthetic": "corporate-minimal",
+      "logo": "aurora-beam"
+    },
+    "black": {
+      "id": "nova",
+      "name": "НОВА",
+      "tagline": "Чёрный Манифест",
+      "motto": "Клетка из золота — всё равно клетка",
+      "description": "Сеть повстанцев, хакеров и беженцев нижних уровней. Воюют за то, чтобы Оракул принадлежал всем.",
+      "theme": {
+        "primary": "#0A0A0F",
+        "secondary": "#FF2D78",
+        "accent": "#FF6B1A",
+        "glow": "#FF2D78"
+      },
+      "aesthetic": "punk-industrial",
+      "logo": "nova-star"
+    }
+  },
+
+  "pieces": {
+    "white": {
+      "king": {
+        "type": "king",
+        "faction": "aurora",
+        "name": "Директор Валент Кейн",
+        "title": "Директор Протокола",
+        "quote": "Я не воюю. Я управляю.",
+        "bio": "Холодный CEO в белом мундире с золотыми погонами. Никогда не покидает командного центра — он слишком ценен, чтобы рисковать. Все решения принимает по формулам. Говорят, он давно перестал считать себя человеком — только функцией.",
+        "personality": ["хладнокровный", "расчётливый", "изолированный"],
+        "visual": {
+          "colors": ["#F0F4FF", "#C9A84C"],
+          "icon": "crown-corporate",
+          "glowColor": "#C9A84C"
+        }
+      },
+      "queen": {
+        "type": "queen",
+        "faction": "aurora",
+        "name": "Командор Аэла Вост",
+        "title": "Командор Первого Удара",
+        "quote": "Он даёт приказы. Я их исполняю — до конца.",
+        "bio": "Настоящая сила Авроры. Генерал-хирург: видит всё поле сразу, бьёт без предупреждения. Носит белую маску с синей полосой через глаза. Когда-то была на стороне Новы — предала их ради идеи порядка. Или ради чего-то ещё.",
+        "personality": ["безжалостная", "блестящий_тактик", "скрывает_прошлое"],
+        "visual": {
+          "colors": ["#4A90D9", "#F0F4FF"],
+          "icon": "mask-blue-stripe",
+          "glowColor": "#4A90D9"
+        }
+      },
+      "rook": {
+        "type": "rook",
+        "faction": "aurora",
+        "names": ["Бастион Сигма", "Бастион Омега"],
+        "title": "Автоматы-Близнецы",
+        "quote": "Мы не охраняем — мы являемся стеной.",
+        "bio": "Близнецы-автоматы в тяжёлой броне, усиленной корпоративным ИИ. Почти не разговаривают — просто держат позицию. У Сигмы сломан левый наплечник, у Омеги — всегда опущено забрало. Никто не знает, есть ли там лицо.",
+        "personality": ["молчаливые", "абсолютно_лояльные", "механические"],
+        "visual": {
+          "colors": ["#C9A84C", "#F0F4FF"],
+          "icon": "fortress-twin",
+          "glowColor": "#C9A84C"
+        }
+      },
+      "bishop": {
+        "type": "bishop",
+        "faction": "aurora",
+        "names": ["Аудитор Лекс", "Аудитор Декс"],
+        "title": "Информационные Брокеры",
+        "quote": "Информация — единственная валюта.",
+        "bio": "Корпоративные информационные брокеры. Двигаются диагоналями через системы данных. Лекс — дотошный педант в круглых очках. Декс — циничный манипулятор. Между ними — негласная конкуренция за расположение Директора.",
+        "personality": ["аналитики", "конкурирующие", "всезнающие"],
+        "visual": {
+          "colors": ["#4A90D9", "#C9A84C"],
+          "icon": "lens-data",
+          "glowColor": "#89C4FF"
+        }
+      },
+      "knight": {
+        "type": "knight",
+        "faction": "aurora",
+        "names": ["Всадник Форс", "Всадник Вейл"],
+        "title": "Элитный Спецназ",
+        "quote": "Мы непредсказуемы даже для себя.",
+        "bio": "Элитный спецназ Авроры на экзоскелетных мотоциклах. Прыгают через линии обороны, бьют в неожиданные точки. Форс — безрассудный весельчак. Вейл — молчаливый перфекционист. Они ненавидят друг друга, но воюют идеально слаженно.",
+        "personality": ["непредсказуемые", "профессионалы", "антагонисты_внутри_команды"],
+        "visual": {
+          "colors": ["#F0F4FF", "#4A90D9"],
+          "icon": "exo-horse",
+          "glowColor": "#89C4FF"
+        }
+      },
+      "pawn": {
+        "type": "pawn",
+        "faction": "aurora",
+        "name": "Страж Протокола",
+        "title": "Рядовой состав",
+        "quote": "Семья в безопасности, пока я стою.",
+        "bio": "Обычные граждане в корпоративной броне. Верят, что защищают своих детей. Некоторые — просто напуганы. Некоторые — фанатики. Каждый пятый втайне сомневается.",
+        "promotionQuote": "Страж получил имя. Он уже не вернётся прежним.",
+        "personality": ["преданные", "сомневающиеся", "обычные_люди"],
+        "visual": {
+          "colors": ["#F0F4FF"],
+          "icon": "guard-helmet",
+          "glowColor": "#C9A84C"
+        }
+      }
+    },
+    "black": {
+      "king": {
+        "type": "king",
+        "faction": "nova",
+        "name": "Патриарх Зед Аркан",
+        "title": "Основатель Новы",
+        "quote": "Я слишком стар, чтобы бежать. Поэтому я стою.",
+        "bio": "Основатель Новы. Седой старик с киберпротезом вместо правой руки — потерял её в первом восстании. Философ, не солдат. Его слова — оружие сильнее любого калибра. Боится только одного: умереть раньше, чем увидит свободу.",
+        "personality": ["мудрый", "усталый", "непреклонный"],
+        "visual": {
+          "colors": ["#0A0A0F", "#FF6B1A"],
+          "icon": "crown-elder",
+          "glowColor": "#FF6B1A"
+        }
+      },
+      "queen": {
+        "type": "queen",
+        "faction": "nova",
+        "name": "Призрак Кира",
+        "title": "Легенда Подполья",
+        "quote": "Меня нет в их базах данных. Значит, я везде.",
+        "bio": "Легендарный хакер-воин, лицо которого никто не видел. Носит чёрный капюшон с неоново-розовой маской. Взламывает системы так же легко, как движется по полю — в любом направлении. Говорят, Аэла Вост знает, кто такая Кира. И боится этого.",
+        "personality": ["легендарная", "неуловимая", "несёт_тайну"],
+        "visual": {
+          "colors": ["#FF2D78", "#0A0A0F"],
+          "icon": "mask-neon-pink",
+          "glowColor": "#FF2D78"
+        }
+      },
+      "rook": {
+        "type": "rook",
+        "faction": "nova",
+        "names": ["Командный Пост «Рейс»", "Командный Пост «Стоун»"],
+        "title": "Мобильные Штабы",
+        "quote": "Мы не крепости. Мы — народ, который не сдвинется.",
+        "bio": "Мобильные бронированные штабы на гусеничном ходу, украшенные граффити и именами погибших бойцов. Рейс — ярче, горячее, на передовой. Стоун — в тылу, холодный аналитик с дырой от пули в бронепластине.",
+        "personality": ["стойкие", "народные", "живые"],
+        "visual": {
+          "colors": ["#FF6B1A", "#0A0A0F"],
+          "icon": "tank-graffiti",
+          "glowColor": "#FF6B1A"
+        }
+      },
+      "bishop": {
+        "type": "bishop",
+        "faction": "nova",
+        "names": ["Пророк Эхо", "Пророк Нихт"],
+        "title": "Слепые Информаторы",
+        "quote": "Мы видим то, чего не существует. Пока.",
+        "bio": "Двое слепых информаторов, которые «видят» через взломанные камеры города. Нихт говорит загадками. Эхо повторяет чужие слова, пока не находит в них смысл. Их данные всегда верны — и всегда жуткие.",
+        "personality": ["загадочные", "провидцы", "тревожные"],
+        "visual": {
+          "colors": ["#4A0E8F", "#FF2D78"],
+          "icon": "eye-blind",
+          "glowColor": "#4A0E8F"
+        }
+      },
+      "knight": {
+        "type": "knight",
+        "faction": "nova",
+        "names": ["Тень Флэш", "Тень Дарт"],
+        "title": "Партизаны-Мотоциклисты",
+        "quote": "Мы не атакуем по прямой. Прямая — это ловушка.",
+        "bio": "Партизаны-мотоциклисты в угольно-чёрной коже с неоновыми полосами. Флэш — быстрее мысли, смеётся во время боя. Дарт — тихий, бьёт первым и исчезает. Обе пришли из нижних ярусов и поклялись не уйти, пока Аврора стоит.",
+        "personality": ["стремительные", "неуловимые", "преданные_делу"],
+        "visual": {
+          "colors": ["#0A0A0F", "#FF2D78"],
+          "icon": "moto-neon",
+          "glowColor": "#FF2D78"
+        }
+      },
+      "pawn": {
+        "type": "pawn",
+        "faction": "nova",
+        "name": "Ребёнок Нижнего Яруса",
+        "title": "Рядовой состав",
+        "quote": "Нам уже нечего терять. Поэтому нам не страшно.",
+        "bio": "Подростки, рабочие, бездомные — те, кого Аврора называет «нересурсами». Идут вперёд, потому что сзади — ничего. У каждого на броне написано имя — своё или того, за кого они воюют.",
+        "promotionQuote": "Пешка дошла до конца. Она стала Кирой. Легенда говорит: это буквально.",
+        "personality": ["бесстрашные", "отчаянные", "человечные"],
+        "visual": {
+          "colors": ["#0A0A0F", "#FF6B1A"],
+          "icon": "hood-graffiti",
+          "glowColor": "#FF2D78"
+        }
+      }
+    }
+  },
+
+  "comicPanels": [
+    {
+      "id": "opening",
+      "trigger": {
+        "event": "game_start",
+        "condition": null
+      },
+      "title": "Завязка",
+      "panelCount": 3,
+      "panels": [
+        {
+          "index": 0,
+          "visual": {
+            "layout": "wide",
+            "description": "Панорама Эдем-0 с высоты. Слева — белые шпили Авроры в облаках. Справа — красно-чёрные огни Новы в глубине.",
+            "mood": "establishing",
+            "colorDominant": "split-white-black"
+          },
+          "caption": "2187 год. Поверхность мертва. Последний город решит судьбу человечества.",
+          "dialogues": []
+        },
+        {
+          "index": 1,
+          "visual": {
+            "layout": "split-vertical",
+            "description": "Крупный план: Валент слева, Зед справа. Смотрят друг на друга через пропасть.",
+            "mood": "confrontation",
+            "colorDominant": "split-white-black"
+          },
+          "caption": null,
+          "dialogues": [
+            {
+              "character": "Директор Валент Кейн",
+              "faction": "aurora",
+              "bubble": "Переговоры окончены.\nСегодня я возвращаю своё.",
+              "style": "cold"
+            },
+            {
+              "character": "Патриарх Зед Аркан",
+              "faction": "nova",
+              "bubble": "Твоё?\nТы даже не помнишь, как его украл.",
+              "style": "quiet"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "visual": {
+            "layout": "full-width",
+            "description": "Обе армии сходятся на нейтральной полосе. Скорость-линии от обоих флангов.",
+            "mood": "action-start",
+            "colorDominant": "neutral-purple"
+          },
+          "caption": "Протокол «Судный День» активирован. Обе стороны пересекли черту. Назад дороги нет.",
+          "dialogues": []
+        }
+      ]
+    },
+    {
+      "id": "conflict",
+      "trigger": {
+        "event": "move_number",
+        "condition": { "move": 10 }
+      },
+      "title": "Нарастание",
+      "panelCount": 3,
+      "panels": [
+        {
+          "index": 0,
+          "visual": {
+            "layout": "wide",
+            "description": "Поле боя в хаосе. Несколько пешек пали с обеих сторон. Следы сражения.",
+            "mood": "chaos",
+            "colorDominant": "mixed-battle"
+          },
+          "caption": "Десятый ход. Каждый погибший страж Протокола когда-то был ребёнком Нижнего Яруса.",
+          "dialogues": []
+        },
+        {
+          "index": 1,
+          "visual": {
+            "layout": "close-up",
+            "description": "Аэла стоит над телом. Смотрит без эмоций. Белая маска с синей полосой отражает огонь.",
+            "mood": "cold-victory",
+            "colorDominant": "aurora-blue"
+          },
+          "caption": null,
+          "dialogues": [
+            {
+              "character": "Командор Аэла Вост",
+              "faction": "aurora",
+              "bubble": "Ещё пятнадцать шагов.\nИ Оракул наш навсегда.",
+              "style": "cold"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "visual": {
+            "layout": "shadow-inset",
+            "description": "Кира в тени, смотрит через прицел на Аэлу. Не стреляет. Рядом — наушник.",
+            "mood": "tension",
+            "colorDominant": "nova-pink"
+          },
+          "caption": null,
+          "dialogues": [
+            {
+              "character": "Призрак Кира",
+              "faction": "nova",
+              "bubble": "Она умнее, чем я думала.\nОна уже видит финал.",
+              "style": "whisper"
+            },
+            {
+              "character": "Патриарх Зед Аркан",
+              "faction": "nova",
+              "bubble": "Тогда измени его, дочка.\nТы единственная, кто может.",
+              "style": "quiet"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "queen_captured",
+      "trigger": {
+        "event": "piece_captured",
+        "condition": { "piece": "queen" }
+      },
+      "title": "Поворотный момент",
+      "panelCount": 4,
+      "panels": [
+        {
+          "index": 0,
+          "visual": {
+            "layout": "action",
+            "description": "Момент взятия — скорость-линии, взрыв энергии. Фракция определяет цвет взрыва.",
+            "mood": "shock",
+            "colorDominant": "impact-yellow"
+          },
+          "caption": null,
+          "dialogues": []
+        },
+        {
+          "index": 1,
+          "visual": {
+            "layout": "close-up-dramatic",
+            "description": "Аэла на коленях. Белая маска треснула. Под ней — лицо молодой женщины с шрамом. Первый раз без маски.",
+            "mood": "vulnerability",
+            "colorDominant": "aurora-broken"
+          },
+          "caption": null,
+          "dialogues": [
+            {
+              "character": "Командор Аэла Вост",
+              "faction": "aurora",
+              "bubble": "Ты не убьёшь меня.\nТы никогда не убиваешь безоружных.",
+              "style": "cracked"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "visual": {
+            "layout": "close-up",
+            "description": "Кира опускает оружие. Снимает маску — лицо впервые видно.",
+            "mood": "revelation",
+            "colorDominant": "nova-pink"
+          },
+          "caption": null,
+          "dialogues": [
+            {
+              "character": "Призрак Кира",
+              "faction": "nova",
+              "bubble": "Нет. Не убью.\nПотому что я — не ты.",
+              "style": "calm"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "visual": {
+            "layout": "split-close",
+            "description": "Аэла смотрит на лицо Киры — узнаёт. За ними горит штаб Авроры.",
+            "mood": "recognition",
+            "colorDominant": "fire-orange"
+          },
+          "caption": "Иногда победа выглядит как поражение. Иногда — как встреча с тем, кем ты была.",
+          "dialogues": [
+            {
+              "character": "Командор Аэла Вост",
+              "faction": "aurora",
+              "bubble": "...Ты. Ты была в Нижнем Ярусе.\nЯ думала, ты погибла в 2181-м.",
+              "style": "broken"
+            },
+            {
+              "character": "Призрак Кира",
+              "faction": "nova",
+              "bubble": "Я погибла.\nМеня заменила она.",
+              "style": "cold"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "checkmate",
+      "trigger": {
+        "event": "checkmate",
+        "condition": null
+      },
+      "title": "Развязка",
+      "panelCount": 4,
+      "panels": [
+        {
+          "index": 0,
+          "visual": {
+            "layout": "wide-dramatic",
+            "description": "Последний бункер Валента. Двери взломаны. Кира и Зед входят — не как враги, а как приговор.",
+            "mood": "finale",
+            "colorDominant": "cold-final"
+          },
+          "caption": null,
+          "dialogues": []
+        },
+        {
+          "index": 1,
+          "visual": {
+            "layout": "close-up",
+            "description": "Валент смотрит на экран Оракула — там уже идёт перезапись кода. Его отражение в экране.",
+            "mood": "defeat-quiet",
+            "colorDominant": "aurora-fading"
+          },
+          "caption": null,
+          "dialogues": [
+            {
+              "character": "Директор Валент Кейн",
+              "faction": "aurora",
+              "bubble": "Вы понимаете, что без контроля\nон уничтожит вас всех?",
+              "style": "cold-broken"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "visual": {
+            "layout": "two-shot",
+            "description": "Зед садится напротив Валента. Без злобы. Как на переговорах, которые давно должны были состояться.",
+            "mood": "quiet-resolution",
+            "colorDominant": "neutral"
+          },
+          "caption": null,
+          "dialogues": [
+            {
+              "character": "Патриарх Зед Аркан",
+              "faction": "nova",
+              "bubble": "Может быть. Но это будет\nнаш выбор. Впервые — наш.",
+              "style": "quiet"
+            },
+            {
+              "character": "Директор Валент Кейн",
+              "faction": "aurora",
+              "bubble": "...Я не знал,\nчто делаю что-то плохое.",
+              "style": "lost"
+            },
+            {
+              "character": "Патриарх Зед Аркан",
+              "faction": "nova",
+              "bubble": "Знаю.\nЭто и есть самое страшное.",
+              "style": "sad"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "visual": {
+            "layout": "full-splash",
+            "description": "Финальная страница во весь экран. Рассвет над Эдем-0. Люди обоих фракций смотрят на небо.",
+            "mood": "ambiguous-hope",
+            "colorDominant": "dawn"
+          },
+          "caption": "ШАХ И МАТ — НО НЕ КОНЕЦ\n\nЭдем-0 получил нового хозяина. Или нет хозяина вовсе.\nИстория этого не решает. Решают люди.",
+          "dialogues": [],
+          "isFinale": true
+        }
+      ]
+    }
+  ],
+
+  "captureFlavorTexts": {
+    "pawn": [
+      "Ещё один голос замолчал.",
+      "Они знали, на что шли.",
+      "Имя зачёркнуто. Но не забыто."
+    ],
+    "knight": [
+      "Непредсказуемый до конца.",
+      "Прыжок оборвался на полуслове.",
+      "Они говорили, что умрут верхом."
+    ],
+    "bishop": [
+      "Информационный канал закрыт.",
+      "Диагональ оборвана.",
+      "Что-то важное было потеряно вместе с ними."
+    ],
+    "rook": [
+      "Стена рухнула.",
+      "Бастион пал. Путь открыт.",
+      "Даже крепости падают."
+    ],
+    "queen": [
+      "Удар, изменивший всё.",
+      "Центр тяжести сместился.",
+      "Теперь ничто не будет прежним."
+    ],
+    "king": [
+      "Всё кончено."
+    ]
+  },
+
+  "visualStyle": {
+    "name": "NeoInk",
+    "outlineWidth": "3px",
+    "outlineColor": "#000000",
+    "halftonePattern": true,
+    "halftoneOpacity": 0.15,
+    "speedLinesOnCapture": true,
+    "panelBorderStyle": "torn-edge",
+    "fonts": {
+      "headline": ["Bangers", "Bebas Neue", "sans-serif"],
+      "dialogue": ["Comic Neue", "Komika Text", "cursive"],
+      "system": ["Share Tech Mono", "Courier New", "monospace"],
+      "caption": ["Oswald", "Impact", "sans-serif"]
+    },
+    "colorPalette": {
+      "background": "#1A1A2E",
+      "neutral": "#4A0E8F",
+      "impactFlash": "#FFEE00",
+      "dawn": "#FF6B35"
+    },
+    "effects": {
+      "neonGlow": true,
+      "glowBlur": "8px",
+      "paperTexture": true,
+      "paperOpacity": 0.08,
+      "flatColors": true,
+      "noGradients": true,
+      "hardShadows": true
+    },
+    "panelTransition": "slide-tear",
+    "bubbleStyle": {
+      "borderWidth": "2px",
+      "borderColor": "#000000",
+      "tailStyle": "angular",
+      "fontSizeDialogue": "14px",
+      "fontSizeCaption": "12px",
+      "letterSpacing": "0.02em",
+      "lineHeight": 1.4
+    }
+  }
+}

@@ -1,0 +1,46 @@
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  display: flex;
+  background: #000;
+  border-top: 2px solid #1a1a1a;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 4px;
+  color: #444;
+  text-decoration: none;
+  transition: color 0.15s;
+  border-top: 2px solid transparent;
+  margin-top: -2px;
+}
+
+.item:hover { color: #888; }
+
+.itemActive {
+  color: #FFEE00;
+  border-top-color: #FFEE00;
+}
+
+.icon {
+  font-size: 22px;
+  line-height: 1;
+  filter: drop-shadow(0 0 4px currentColor);
+}
+
+.label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  line-height: 1;
+}

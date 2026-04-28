@@ -1,0 +1,316 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1800;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(2px);
+}
+
+/* ── Panel ───────────────────────────────────────────────────────────────── */
+.panel {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  z-index: 1900;
+  width: min(360px, 100vw);
+  background: #0A0A0F;
+  border-left: 2px solid #1a1a2e;
+  box-shadow: -4px 0 40px rgba(0,0,0,0.8), 0 0 20px #4A90D922;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #222 #0a0a0f;
+}
+
+.panelIn  { animation: slideIn 0.32s cubic-bezier(0.22,1,0.36,1) both; }
+.panelOut { animation: slideOut 0.28s ease-in both; }
+
+@keyframes slideIn  { from { transform: translateX(100%); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes slideOut { from { transform: none; opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 14px;
+  background: #000;
+  border-bottom: 2px solid #111;
+  flex-shrink: 0;
+}
+
+.headerIcon { font-size: 24px; flex-shrink: 0; }
+
+.headerText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.headerTitle {
+  font-family: 'Bangers', cursive;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  color: #4A90D9;
+  text-shadow: 0 0 10px #4A90D966;
+}
+
+.headerSub {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: #555;
+  letter-spacing: 0.08em;
+}
+
+.closeBtn {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: #111; border: 1px solid #333;
+  color: #666; font-size: 13px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s; flex-shrink: 0;
+  font-family: sans-serif;
+}
+.closeBtn:hover { color: #FF2D78; border-color: #FF2D78; }
+
+/* ── Loading ─────────────────────────────────────────────────────────────── */
+.loading {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px 16px;
+}
+
+.loadingText {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  color: #888;
+  letter-spacing: 0.04em;
+  margin: 0;
+  animation: blink 1.2s ease-in-out infinite;
+}
+
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+.progressTrack {
+  height: 4px;
+  background: #111;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background: #4A90D9;
+  box-shadow: 0 0 8px #4A90D9;
+  transition: width 0.3s ease;
+}
+
+.loadingHint {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: #444;
+  margin: 0;
+  letter-spacing: 0.06em;
+}
+
+/* ── Results ─────────────────────────────────────────────────────────────── */
+.results {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 32px;
+}
+
+/* Accuracy block */
+.accuracyBlock {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+}
+
+.accuracyRing {
+  position: relative;
+  flex-shrink: 0;
+  width: 80px; height: 80px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.accuracyNum {
+  position: absolute;
+  font-family: 'Bangers', cursive;
+  font-size: 20px;
+  color: #f0f0f0;
+  letter-spacing: 0.04em;
+}
+
+.accuracyStats {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.accuracyLabel {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: #555;
+  letter-spacing: 0.15em;
+}
+
+.mistakeSummary {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.mistakeSummary span {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+.divider {
+  height: 1px;
+  background: #1a1a2e;
+  margin: 0 16px;
+}
+
+/* No mistakes */
+.noMistakes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 32px 16px;
+  text-align: center;
+}
+
+.noMistakesIcon { font-size: 40px; color: #4caf50; }
+
+.noMistakesText {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Mistake card ─────────────────────────────────────────────────────────── */
+.mistakeCard {
+  padding: 14px 16px;
+  border-bottom: 1px solid #111;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-left: 3px solid var(--mt, #FF2D78);
+}
+
+.mistakeBadge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Bangers', cursive;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  border: 1px solid;
+  padding: 3px 10px;
+  width: fit-content;
+  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+}
+
+.mistakeBadgeIcon { font-size: 14px; }
+
+.mistakeMoveNum {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  opacity: 0.7;
+  font-weight: normal;
+  letter-spacing: 0.08em;
+}
+
+/* Played vs Best */
+.moveCompare {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.moveBox {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 10px;
+  border: 1px solid;
+  border-radius: 2px;
+}
+
+.moveBoxLabel {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: #555;
+  letter-spacing: 0.1em;
+}
+
+.moveSan {
+  font-family: 'Bangers', cursive;
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  text-shadow: 0 0 8px currentColor;
+}
+
+.moveArrow {
+  font-family: 'Bangers', cursive;
+  font-size: 18px;
+  color: #333;
+  flex-shrink: 0;
+}
+
+/* Eval bar */
+.evalBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.evalLabel {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: #555;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.evalTrack {
+  flex: 1;
+  height: 4px;
+  background: #111;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.evalFill {
+  height: 100%;
+  border-radius: 2px;
+  opacity: 0.8;
+}
+
+/* Tip */
+.tip {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: #888;
+  line-height: 1.6;
+  margin: 0;
+  letter-spacing: 0.02em;
+  font-style: italic;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .panel { top: 30%; border-radius: 12px 12px 0 0; border-left: none; border-top: 2px solid #1a1a2e; }
+  @keyframes slideIn  { from { transform: translateY(100%); opacity: 0; } to { transform: none; opacity: 1; } }
+  @keyframes slideOut { from { transform: none; opacity: 1; } to { transform: translateY(100%); opacity: 0; } }
+}

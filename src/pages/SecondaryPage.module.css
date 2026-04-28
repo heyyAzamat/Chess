@@ -1,0 +1,668 @@
+/* Shared styles for Characters, Rating, Friends, Settings pages */
+
+.page {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: #0A0A0F;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: #000;
+  border-bottom: 2px solid #111;
+  flex-shrink: 0;
+  gap: 12px;
+}
+
+.backBtn {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  padding: 6px 12px;
+  background: #111;
+  border: 1px solid #333;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.backBtn:hover { color: #fff; border-color: #666; }
+
+.pageTitle {
+  font-family: 'Bangers', cursive;
+  font-size: 24px;
+  letter-spacing: 0.1em;
+  color: #FFEE00;
+  text-shadow: 0 0 12px #FFEE0055;
+  flex: 1;
+  text-align: center;
+}
+
+/* Filter tabs (characters page) */
+.filterTabs {
+  display: flex;
+  gap: 4px;
+}
+
+.filterTab {
+  font-family: 'Bangers', cursive;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  padding: 5px 12px;
+  background: #111;
+  border: 1px solid #222;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.filterTabActive {
+  color: #FFEE00;
+  border-color: #FFEE00;
+  background: #1a1a00;
+}
+
+/* ── Main ────────────────────────────────────────────────────────────────── */
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Section ─────────────────────────────────────────────────────────────── */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sectionTitle {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 8px currentColor;
+}
+
+.sectionMotto {
+  font-family: 'Comic Neue', cursive;
+  font-weight: 700;
+  font-size: 12px;
+  color: #555;
+  font-style: italic;
+  margin: -6px 0 4px;
+}
+
+/* ── Characters grid ─────────────────────────────────────────────────────── */
+.charGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.charCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 10px;
+  background: #0f0f1a;
+  border: 2px solid #1a1a2e;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+}
+
+.charCard:hover {
+  border-color: var(--c, #444);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--c, #444) 20%, transparent);
+  background: #12121f;
+}
+
+.charCardActive {
+  border-color: var(--c, #444);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--c, #444) 30%, transparent);
+}
+
+.charPiece { flex-shrink: 0; }
+
+.charInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+}
+
+.charType {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: #555;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.charName {
+  font-family: 'Bangers', cursive;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--c, #fff);
+  line-height: 1.2;
+  text-shadow: 0 0 6px var(--c, #fff);
+}
+
+.charTitle {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: #444;
+  letter-spacing: 0.06em;
+}
+
+.charQuote {
+  font-family: 'Comic Neue', cursive;
+  font-weight: 700;
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* ── Rating page ─────────────────────────────────────────────────────────── */
+.ratingFactions {
+  display: flex;
+  gap: 12px;
+}
+
+.ratingFaction {
+  flex: 1;
+  background: #0f0f1a;
+  border: 2px solid var(--c, #444);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--c, #444) 15%, transparent);
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ratingFactionName {
+  font-family: 'Bangers', cursive;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  color: var(--c, #fff);
+  text-shadow: 0 0 8px var(--c, #fff);
+}
+
+.ratingFactionCount {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  color: #555;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableHead tr {
+  background: #000;
+  border-bottom: 2px solid #1a1a2e;
+}
+
+.th {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  color: #555;
+  letter-spacing: 0.15em;
+  padding: 8px 12px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.tableRow {
+  border-bottom: 1px solid #111;
+  transition: background 0.1s;
+}
+
+.tableRow:hover { background: #0f0f1a; }
+
+.tableRowUser {
+  background: #0d0d00 !important;
+  border: 1px solid #FFEE0033;
+}
+
+.td {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  color: #888;
+  padding: 10px 12px;
+}
+
+.playerCell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.factionPip {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.playerName {
+  font-family: 'Bangers', cursive;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  color: #ccc;
+}
+
+.factionTag {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+
+.onlineDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4caf50;
+  box-shadow: 0 0 6px #4caf50;
+  flex-shrink: 0;
+}
+
+.youTag {
+  font-family: 'Bangers', cursive;
+  font-size: 11px;
+  color: #FFEE00;
+  letter-spacing: 0.08em;
+  border: 1px solid #FFEE0066;
+  padding: 1px 5px;
+}
+
+.ratingNum {
+  font-family: 'Bangers', cursive;
+  font-size: 18px;
+  color: #ccc;
+}
+
+/* ── Friends ─────────────────────────────────────────────────────────────── */
+.searchInput {
+  background: #0a0a14;
+  border: 2px solid #1a1a2e;
+  color: #f0f0f0;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  padding: 10px 14px;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.15s;
+}
+
+.searchInput::placeholder { color: #333; }
+.searchInput:focus { border-color: #4A90D9; }
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid #111;
+}
+
+.tab {
+  font-family: 'Bangers', cursive;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  color: #444;
+  cursor: pointer;
+  transition: all 0.15s;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+}
+
+.tabActive {
+  color: #FFEE00;
+  border-bottom-color: #FFEE00;
+}
+
+.friendsList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.emptyText {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  color: #444;
+  text-align: center;
+  padding: 24px;
+}
+
+.friendCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  background: #0f0f1a;
+  border: 1px solid #1a1a2e;
+  transition: border-color 0.15s;
+}
+
+.friendCard:hover { border-color: #333; }
+
+.friendAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bangers', cursive;
+  font-size: 16px;
+  color: #000;
+  flex-shrink: 0;
+}
+
+.friendInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.friendNameRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.friendName {
+  font-family: 'Bangers', cursive;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  color: #e0e0e0;
+}
+
+.offlineText {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  color: #444;
+}
+
+.friendMeta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.friendRating {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  color: #555;
+  letter-spacing: 0.08em;
+}
+
+.friendActions {
+  display: flex;
+  gap: 6px;
+}
+
+.actionBtn {
+  width: 34px;
+  height: 34px;
+  border-radius: 2px;
+  background: #111;
+  border: 1px solid #222;
+  color: var(--a, #666);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.actionBtn:hover {
+  border-color: var(--a, #666);
+  box-shadow: 0 0 8px var(--a, #666);
+}
+
+.addFriendBox {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  background: #0f0f1a;
+  border: 1px solid #1a1a2e;
+}
+
+.addFriendLabel {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  color: #555;
+  letter-spacing: 0.15em;
+}
+
+.addFriendRow {
+  display: flex;
+  gap: 8px;
+}
+
+.addBtn {
+  font-family: 'Bangers', cursive;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  padding: 0 20px;
+  background: #4A90D9;
+  border: 2px solid #4A90D9;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.addBtn:hover { background: #6aa8e0; }
+
+/* ── Settings ─────────────────────────────────────────────────────────────── */
+.settingSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sectionLabel {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  color: #555;
+  letter-spacing: 0.2em;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #111;
+}
+
+.accountBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 14px;
+  background: #0f0f1a;
+  border: 1px solid #1a1a2e;
+}
+
+.accountInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.accountUsername {
+  font-family: 'Bangers', cursive;
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  color: #f0f0f0;
+}
+
+.accountMeta {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  color: #555;
+}
+
+.dangerBtn {
+  font-family: 'Bangers', cursive;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  padding: 8px 18px;
+  background: #1a0a0a;
+  border: 2px solid #FF2D78;
+  color: #FF2D78;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.dangerBtn:hover { background: #FF2D78; color: #000; }
+
+.optionRow {
+  display: flex;
+  gap: 8px;
+}
+
+.optionBtn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 10px;
+  background: #0a0a14;
+  border: 2px solid #1a1a2e;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+}
+
+.optionBtn:hover { border-color: var(--opt, #666); }
+
+.optionBtnActive {
+  border-color: var(--opt, #666);
+  background: #12121f;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--opt, #666) 20%, transparent);
+}
+
+.optionLabel {
+  font-family: 'Bangers', cursive;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  color: var(--opt, #fff);
+}
+
+.optionSub {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  color: #555;
+  letter-spacing: 0.04em;
+}
+
+.toggleList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px;
+  background: #0f0f1a;
+  border: 1px solid #111;
+  border-bottom: none;
+}
+
+.toggleRow:last-child { border-bottom: 1px solid #111; }
+
+.toggleInfo { display: flex; flex-direction: column; gap: 2px; }
+
+.toggleLabel {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  color: #ccc;
+  letter-spacing: 0.06em;
+}
+
+.toggleSub {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  color: #444;
+}
+
+.toggle {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: #1a1a2e;
+  border: 2px solid #333;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.toggleOn {
+  background: #4A90D922;
+  border-color: #4A90D9;
+  box-shadow: 0 0 8px #4A90D944;
+}
+
+.toggleKnob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #444;
+  transition: transform 0.2s, background 0.2s;
+  display: block;
+}
+
+.toggleOn .toggleKnob {
+  transform: translateX(20px);
+  background: #4A90D9;
+}
+
+.saveBtn {
+  font-family: 'Bangers', cursive;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  padding: 14px;
+  background: #0f0f1a;
+  border: 2px solid var(--c, #FFEE00);
+  color: var(--c, #FFEE00);
+  cursor: pointer;
+  clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+  transition: all 0.2s;
+  margin-top: 8px;
+}
+
+.saveBtn:hover {
+  background: var(--c, #FFEE00);
+  color: #000;
+  box-shadow: 0 0 24px var(--c, #FFEE00);
+}
+
+@media (max-width: 500px) {
+  .charGrid { grid-template-columns: repeat(2, 1fr); }
+  .optionRow { flex-direction: column; }
+}
